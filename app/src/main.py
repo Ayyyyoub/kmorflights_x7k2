@@ -32,15 +32,24 @@ def load_safe_transit_airlines() -> set[str]:
         return set(json.load(f)["safe_hub_airlines"].keys())
 
 
+def env(key: str, default: str) -> str:
+    """os.environ.get() but treats an empty string the same as unset - CI
+    systems (e.g. GitHub Actions) set env vars to "" for undefined config
+    variables rather than omitting them, which silently broke defaulting.
+    """
+    value = os.environ.get(key)
+    return value if value else default
+
+
 def load_config() -> dict:
-    origins_env = os.environ.get("ORIGIN_AIRPORTS", "CMN,RBA,RAK,TNG")
+    origins_env = env("ORIGIN_AIRPORTS", "CMN,RBA,RAK,TNG")
     origins = [o.strip().upper() for o in origins_env.split(",") if o.strip()]
     return {
         "origins": origins,
-        "currency": os.environ.get("CURRENCY", "USD"),
-        "max_price": float(os.environ.get("MAX_PRICE_USD", "250")),
-        "max_stops": int(os.environ.get("MAX_STOPS", "1")),
-        "improvement_threshold_pct": float(os.environ.get("IMPROVEMENT_THRESHOLD_PCT", "5")),
+        "currency": env("CURRENCY", "USD"),
+        "max_price": float(env("MAX_PRICE_USD", "250")),
+        "max_stops": int(env("MAX_STOPS", "1")),
+        "improvement_threshold_pct": float(env("IMPROVEMENT_THRESHOLD_PCT", "5")),
         "token": os.environ["TRAVELPAYOUTS_TOKEN"],
         "ntfy_topic": os.environ["NTFY_TOPIC"],
     }

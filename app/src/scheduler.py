@@ -9,7 +9,7 @@ import sys
 import time
 from pathlib import Path
 
-INTERVAL_SECONDS = int(os.environ.get("CHECK_INTERVAL_SECONDS", str(6 * 3600)))
+INTERVAL_SECONDS = int(os.environ.get("CHECK_INTERVAL_SECONDS") or str(6 * 3600))
 SCRIPT = Path(__file__).parent / "main.py"
 
 if __name__ == "__main__":
