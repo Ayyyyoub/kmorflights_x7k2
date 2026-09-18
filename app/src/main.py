@@ -77,7 +77,7 @@ def main() -> None:
                 for airport in dest["airports"]:
                     checked += 1
                     try:
-                        fares = client.cheapest_fares(origin, airport, currency=cfg["currency"])
+                        fares = client.cheapest_fares(origin, airport, currency=cfg["currency"], one_way=False)
                     except TravelpayoutsError as exc:
                         print(f"[warn] {origin}->{airport}: {exc}", file=sys.stderr)
                         time.sleep(1)
@@ -106,7 +106,8 @@ def main() -> None:
                         price_str = f"{cheapest.price:.0f} {cfg['currency']}"
                         if mad_price is not None:
                             price_str += f" (~{mad_price:.0f} MAD)"
-                        title = f"{origin} -> {dest['country']} ({airport}): {price_str}"
+                        trip_desc = "round-trip" if cheapest.return_date else "one-way"
+                        title = f"{origin} -> {dest['country']} ({airport}): {price_str} {trip_desc}"
                         message = (
                             f"{stop_desc} ({cheapest.airline or '?'}), depart {cheapest.departure_date}"
                             + (f", return {cheapest.return_date}" if cheapest.return_date else "")

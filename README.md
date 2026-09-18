@@ -17,7 +17,7 @@ Everything here is free: free flight-price API tier, free push notifications
   (direct + connecting) per route from the Travelpayouts Data API.
 - `app/src/main.py` — for every origin x destination airport pair, checks
   the cheapest fare; if it's a new low (or at least `IMPROVEMENT_THRESHOLD_PCT`
-  cheaper than the last alert) and under `MAX_PRICE_USD`, sends a push alert.
+  cheaper than the last alert) and under `MAX_PRICE_USD` (round-trip), sends a push alert.
 - `app/src/storage.py` — SQLite file remembering best price per route, so
   you're not re-alerted on the same price every run.
 - `app/src/notifier.py` — sends the alert via [ntfy.sh](https://ntfy.sh).
