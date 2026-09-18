@@ -17,7 +17,7 @@ Everything here is free: free flight-price API tier, free push notifications
   (direct + connecting) per route from the Travelpayouts Data API.
 - `app/src/main.py` — for every origin x destination airport pair, checks
   the cheapest fare; if it's a new low (or at least `IMPROVEMENT_THRESHOLD_PCT`
-  cheaper than the last alert) and under `MAX_PRICE_EUR`, sends a push alert.
+  cheaper than the last alert) and under `MAX_PRICE_USD`, sends a push alert.
 - `app/src/storage.py` — SQLite file remembering best price per route, so
   you're not re-alerted on the same price every run.
 - `app/src/notifier.py` — sends the alert via [ntfy.sh](https://ntfy.sh).
@@ -25,6 +25,23 @@ Everything here is free: free flight-price API tier, free push notifications
   container.
 - `.github/workflows/check-flights.yml` — same check, run for free on
   GitHub's cloud cron (in case your machine is off).
+
+## Important: connecting flights and Schengen/UK transit visas
+
+If you're a Moroccan passport holder **without a Schengen (or UK) visa**,
+connecting through most European hub airports (Paris, Madrid, Lisbon,
+Brussels, Milan, etc.) requires an Airport Transit Visa even if you never
+leave the airport. The free flight-price API this app uses **does not
+report the actual layover airport** — only the airline and stop count.
+
+To stay safe, `app/data/safe_transit_airlines.json` allowlists airlines
+whose hub is confirmed outside the Schengen Area/UK (Turkish Airlines,
+Gulf carriers, EgyptAir, Royal Air Maroc, etc.). `app/src/main.py` only
+considers a connecting itinerary if it's flown by one of those airlines;
+anything else is silently dropped unless it's a direct flight. This is a
+heuristic, not a guarantee — **always check the actual routing on the
+booking page before paying**, and every connecting-flight alert includes
+a reminder to do so.
 
 ## One-time setup (~5 minutes)
 
@@ -54,7 +71,7 @@ Edit `.env`:
 - `NTFY_TOPIC` — the topic you subscribed to in step 2
 - `ORIGIN_AIRPORTS` — defaults to `CMN,RBA,RAK,TNG` (Casablanca, Rabat,
   Marrakesh, Tangier)
-- `MAX_PRICE_EUR`, `MAX_STOPS`, `IMPROVEMENT_THRESHOLD_PCT` — tune to taste
+- `MAX_PRICE_USD`, `MAX_STOPS`, `IMPROVEMENT_THRESHOLD_PCT` — tune to taste
 
 ### 4. Run it — pick one or both
 
@@ -73,7 +90,7 @@ Runs forever in the background, rechecking every `CHECK_INTERVAL_SECONDS`
 2. In the repo's **Settings -> Secrets and variables -> Actions**:
    - Add secrets: `TRAVELPAYOUTS_TOKEN`, `NTFY_TOPIC`
    - Add variables (optional, same names as `.env`): `ORIGIN_AIRPORTS`,
-     `CURRENCY`, `MAX_PRICE_EUR`, `MAX_STOPS`, `IMPROVEMENT_THRESHOLD_PCT`
+     `CURRENCY`, `MAX_PRICE_USD`, `MAX_STOPS`, `IMPROVEMENT_THRESHOLD_PCT`
 3. The workflow runs automatically every 6 hours, and can be triggered
    manually from the **Actions** tab (**Run workflow**).
 

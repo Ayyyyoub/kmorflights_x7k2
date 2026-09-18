@@ -19,10 +19,17 @@ sys.path.insert(0, str(Path(__file__).parent))
 from storage import connect, get_best, upsert_best  # noqa: E402
 from notifier import send_deal_alert  # noqa: E402
 from travelpayouts_client import TravelpayoutsClient, TravelpayoutsError  # noqa: E402
+from currency import usd_to_mad  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 DB_PATH = str(ROOT / "data" / "state.sqlite3")
 DESTINATIONS_PATH = ROOT / "data" / "visa_free_destinations.json"
+SAFE_TRANSIT_AIRLINES_PATH = ROOT / "data" / "safe_transit_airlines.json"
+
+
+def load_safe_transit_airlines() -> set[str]:
+    with open(SAFE_TRANSIT_AIRLINES_PATH, encoding="utf-8") as f:
+        return set(json.load(f)["safe_hub_airlines"].keys())
 
 
 def load_config() -> dict:
@@ -30,8 +37,8 @@ def load_config() -> dict:
     origins = [o.strip().upper() for o in origins_env.split(",") if o.strip()]
     return {
         "origins": origins,
-        "currency": os.environ.get("CURRENCY", "EUR"),
-        "max_price_eur": float(os.environ.get("MAX_PRICE_EUR", "250")),
+        "currency": os.environ.get("CURRENCY", "USD"),
+        "max_price": float(os.environ.get("MAX_PRICE_USD", "250")),
         "max_stops": int(os.environ.get("MAX_STOPS", "1")),
         "improvement_threshold_pct": float(os.environ.get("IMPROVEMENT_THRESHOLD_PCT", "5")),
         "token": os.environ["TRAVELPAYOUTS_TOKEN"],
@@ -57,6 +64,7 @@ def should_alert(existing: tuple[float, float | None] | None, price: float, impr
 def main() -> None:
     cfg = load_config()
     destinations = load_destinations()
+    safe_transit_airlines = load_safe_transit_airlines()
     client = TravelpayoutsClient(cfg["token"])
     now_iso = datetime.now(timezone.utc).isoformat()
 
@@ -75,13 +83,17 @@ def main() -> None:
                         time.sleep(1)
                         continue
 
-                    candidates = [f for f in fares if f.stops <= cfg["max_stops"]]
+                    candidates = [
+                        f
+                        for f in fares
+                        if f.stops <= cfg["max_stops"] and (f.stops == 0 or f.airline in safe_transit_airlines)
+                    ]
                     if not candidates:
                         time.sleep(0.3)
                         continue
                     cheapest = min(candidates, key=lambda f: f.price)
 
-                    if cheapest.price > cfg["max_price_eur"]:
+                    if cheapest.price > cfg["max_price"]:
                         time.sleep(0.3)
                         continue
 
@@ -90,12 +102,22 @@ def main() -> None:
 
                     if alert:
                         stop_desc = "direct" if cheapest.stops == 0 else f"{cheapest.stops} stop(s)"
-                        title = f"{origin} -> {dest['country']} ({airport}): {cheapest.price:.0f} {cfg['currency']}"
+                        mad_price = usd_to_mad(cheapest.price) if cfg["currency"] == "USD" else None
+                        price_str = f"{cheapest.price:.0f} {cfg['currency']}"
+                        if mad_price is not None:
+                            price_str += f" (~{mad_price:.0f} MAD)"
+                        title = f"{origin} -> {dest['country']} ({airport}): {price_str}"
                         message = (
-                            f"{stop_desc}, depart {cheapest.departure_date}"
+                            f"{stop_desc} ({cheapest.airline or '?'}), depart {cheapest.departure_date}"
                             + (f", return {cheapest.return_date}" if cheapest.return_date else "")
                             + f"\nVisa: {dest['visa_category']} (max {dest.get('max_stay_days', '?')} days)"
                         )
+                        if cheapest.stops > 0:
+                            message += (
+                                "\n⚠️ Connecting flight: layover airport isn't confirmed by this API. "
+                                "Airline's hub is outside Schengen/UK, but double-check the actual routing on "
+                                "the booking page before paying - you don't hold a Schengen visa."
+                            )
                         send_deal_alert(cfg["ntfy_topic"], title, message, url=cheapest.link)
                         alerts_sent += 1
 

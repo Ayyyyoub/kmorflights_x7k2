@@ -1,0 +1,24 @@
+{
+  "_comment": "IATA 2-letter airline codes whose primary hub is OUTSIDE the Schengen Area and the UK, so a connection there does not require a Schengen/UK Airport Transit Visa for a Moroccan passport holder. The free flight-price API used by this app does NOT report the actual layover airport, only the airline and stop count - this allowlist is a heuristic safeguard, not a guarantee. ALWAYS double-check the actual routing on the booking site before paying, especially for airlines not in this list (which are blocked from connections by default because many European/UK carriers hub through Schengen or the UK).",
+  "safe_hub_airlines": {
+    "TK": "Turkish Airlines - hubs Istanbul (IST), not Schengen/UK",
+    "PC": "Pegasus Airlines - hubs Istanbul Sabiha Gokcen (SAW), not Schengen/UK",
+    "XQ": "SunExpress - hubs Turkey, not Schengen/UK",
+    "QR": "Qatar Airways - hubs Doha (DOH)",
+    "EK": "Emirates - hubs Dubai (DXB)",
+    "EY": "Etihad Airways - hubs Abu Dhabi (AUH)",
+    "FZ": "flydubai - hubs Dubai (DXB)",
+    "WY": "Oman Air - hubs Muscat (MCT)",
+    "GF": "Gulf Air - hubs Bahrain (BAH)",
+    "MS": "EgyptAir - hubs Cairo (CAI)",
+    "RJ": "Royal Jordanian - hubs Amman (AMM)",
+    "SV": "Saudia - hubs Jeddah/Riyadh (JED/RUH)",
+    "XY": "flynas - hubs Saudi Arabia",
+    "F3": "flyadeal - hubs Saudi Arabia",
+    "G9": "Air Arabia - hubs Sharjah (SHJ)",
+    "AT": "Royal Air Maroc - Moroccan carrier, mostly direct/own hub (CMN)",
+    "ET": "Ethiopian Airlines - hubs Addis Ababa (ADD)",
+    "KQ": "Kenya Airways - hubs Nairobi (NBO)",
+    "TU": "Tunisair - hubs Tunis (TUN), not Schengen/UK"
+  }
+}

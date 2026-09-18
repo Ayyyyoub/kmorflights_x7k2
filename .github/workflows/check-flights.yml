@@ -33,7 +33,7 @@ jobs:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           ORIGIN_AIRPORTS: ${{ vars.ORIGIN_AIRPORTS }}
           CURRENCY: ${{ vars.CURRENCY }}
-          MAX_PRICE_EUR: ${{ vars.MAX_PRICE_EUR }}
+          MAX_PRICE_USD: ${{ vars.MAX_PRICE_USD }}
           MAX_STOPS: ${{ vars.MAX_STOPS }}
           IMPROVEMENT_THRESHOLD_PCT: ${{ vars.IMPROVEMENT_THRESHOLD_PCT }}
         run: python app/src/main.py
