@@ -1,0 +1,9 @@
+services:
+  morflights:
+    build: .
+    container_name: morflights
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./app/data:/app/app/data

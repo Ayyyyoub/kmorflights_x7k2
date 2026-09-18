@@ -1,0 +1,39 @@
+name: Check flight deals
+
+on:
+  schedule:
+    # Every 6 hours. GitHub Actions cron runs in UTC.
+    - cron: "0 */6 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Restore price-history state
+        uses: actions/cache@v4
+        with:
+          path: app/data/state.sqlite3
+          key: morflights-state-${{ github.run_id }}
+          restore-keys: |
+            morflights-state-
+
+      - name: Run flight check
+        env:
+          TRAVELPAYOUTS_TOKEN: ${{ secrets.TRAVELPAYOUTS_TOKEN }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          ORIGIN_AIRPORTS: ${{ vars.ORIGIN_AIRPORTS }}
+          CURRENCY: ${{ vars.CURRENCY }}
+          MAX_PRICE_EUR: ${{ vars.MAX_PRICE_EUR }}
+          MAX_STOPS: ${{ vars.MAX_STOPS }}
+          IMPROVEMENT_THRESHOLD_PCT: ${{ vars.IMPROVEMENT_THRESHOLD_PCT }}
+        run: python app/src/main.py

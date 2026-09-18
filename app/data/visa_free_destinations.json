@@ -1,0 +1,282 @@
+[
+  {
+    "country": "Turkey",
+    "iso2": "TR",
+    "airports": ["IST", "SAW", "AYT"],
+    "visa_category": "e_visa_easy",
+    "max_stay_days": 90,
+    "notes": "Electronic visa available online before travel."
+  },
+  {
+    "country": "Saudi Arabia",
+    "iso2": "SA",
+    "airports": ["JED", "RUH", "MED"],
+    "visa_category": "e_visa_easy",
+    "max_stay_days": 90,
+    "notes": "Tourist eVisa / Umrah visa easily obtainable online via official portal."
+  },
+  {
+    "country": "Tunisia",
+    "iso2": "TN",
+    "airports": ["TUN", "DJE", "NBE"],
+    "visa_category": "visa_free",
+    "max_stay_days": 90,
+    "notes": "Visa-free entry for Moroccan citizens up to 90 days."
+  },
+  {
+    "country": "Senegal",
+    "iso2": "SN",
+    "airports": ["DSS"],
+    "visa_category": "visa_free",
+    "max_stay_days": 90,
+    "notes": "Visa-free entry up to 90 days."
+  },
+  {
+    "country": "Ivory Coast",
+    "iso2": "CI",
+    "airports": ["ABJ"],
+    "visa_category": "visa_free",
+    "max_stay_days": 90,
+    "notes": "Visa-free access for Moroccan passport holders."
+  },
+  {
+    "country": "Benin",
+    "iso2": "BJ",
+    "airports": ["COO"],
+    "visa_category": "visa_free",
+    "max_stay_days": 90,
+    "notes": "Visa-free access for African citizens up to 90 days."
+  },
+  {
+    "country": "Guinea",
+    "iso2": "GN",
+    "airports": ["CKY"],
+    "visa_category": "visa_free",
+    "max_stay_days": 90,
+    "notes": "Visa-free entry up to 90 days."
+  },
+  {
+    "country": "Gabon",
+    "iso2": "GA",
+    "airports": ["LBV"],
+    "visa_category": "visa_free",
+    "max_stay_days": 30,
+    "notes": "Visa-free entry under bilateral agreement for up to 30 days."
+  },
+  {
+    "country": "Seychelles",
+    "iso2": "SC",
+    "airports": ["SEZ"],
+    "visa_category": "visa_free",
+    "max_stay_days": 30,
+    "notes": "Free visitor permit issued on arrival with return ticket and accommodation proof."
+  },
+  {
+    "country": "Rwanda",
+    "iso2": "RW",
+    "airports": ["KGL"],
+    "visa_category": "visa_on_arrival",
+    "max_stay_days": 30,
+    "notes": "30-day visa issued upon arrival at Kigali International Airport."
+  },
+  {
+    "country": "Mauritius",
+    "iso2": "MU",
+    "airports": ["MRU"],
+    "visa_category": "visa_on_arrival",
+    "max_stay_days": 60,
+    "notes": "Visa on arrival granted for tourism stays up to 60 days."
+  },
+  {
+    "country": "Madagascar",
+    "iso2": "MG",
+    "airports": ["TNR", "NOS"],
+    "visa_category": "visa_on_arrival",
+    "max_stay_days": 60,
+    "notes": "Visa on arrival or eVisa available up to 60 days."
+  },
+  {
+    "country": "Kenya",
+    "iso2": "KE",
+    "airports": ["NBO", "MBA"],
+    "visa_category": "e_visa_easy",
+    "max_stay_days": 90,
+    "notes": "Electronic Travel Authorisation (eTA) applied online before departure."
+  },
+  {
+    "country": "Tanzania",
+    "iso2": "TZ",
+    "airports": ["DAR", "ZNZ", "JRO"],
+    "visa_category": "visa_on_arrival",
+    "max_stay_days": 90,
+    "notes": "Visa on arrival or simple eVisa available for up to 90 days."
+  },
+  {
+    "country": "Malaysia",
+    "iso2": "MY",
+    "airports": ["KUL", "PEN", "BKI"],
+    "visa_category": "visa_free",
+    "max_stay_days": 90,
+    "notes": "Visa-free access up to 90 days; MDAC digital arrival card required online prior to entry."
+  },
+  {
+    "country": "Indonesia",
+    "iso2": "ID",
+    "airports": ["CGK", "DPS", "SUB"],
+    "visa_category": "visa_on_arrival",
+    "max_stay_days": 30,
+    "notes": "Electronic Visa on Arrival (e-VoA) or VoA at airport for 30 days, extendable once."
+  },
+  {
+    "country": "Maldives",
+    "iso2": "MV",
+    "airports": ["MLE"],
+    "visa_category": "visa_on_arrival",
+    "max_stay_days": 30,
+    "notes": "Free 30-day tourist visa granted on arrival."
+  },
+  {
+    "country": "Jordan",
+    "iso2": "JO",
+    "airports": ["AMM", "AQJ"],
+    "visa_category": "visa_on_arrival",
+    "max_stay_days": 30,
+    "notes": "Visa on arrival or online eVisa; fee waived if holding Jordan Pass."
+  },
+  {
+    "country": "Nepal",
+    "iso2": "NP",
+    "airports": ["KTM"],
+    "visa_category": "visa_on_arrival",
+    "max_stay_days": 90,
+    "notes": "Tourist visa on arrival available for 15, 30, or 90 days."
+  },
+  {
+    "country": "Cambodia",
+    "iso2": "KH",
+    "airports": ["PNH", "SAI"],
+    "visa_category": "visa_on_arrival",
+    "max_stay_days": 30,
+    "notes": "Visa on arrival and quick eVisa available for 30 days."
+  },
+  {
+    "country": "Laos",
+    "iso2": "LA",
+    "airports": ["VTE", "LPQ"],
+    "visa_category": "visa_on_arrival",
+    "max_stay_days": 30,
+    "notes": "Visa on arrival or online eVisa valid for 30 days."
+  },
+  {
+    "country": "Sri Lanka",
+    "iso2": "LK",
+    "airports": ["CMB"],
+    "visa_category": "e_visa_easy",
+    "max_stay_days": 30,
+    "notes": "Electronic Travel Authorization / eVisa applied easily online prior to arrival."
+  },
+  {
+    "country": "Oman",
+    "iso2": "OM",
+    "airports": ["MCT", "SLL"],
+    "visa_category": "e_visa_easy",
+    "max_stay_days": 30,
+    "notes": "Fast tourist eVisa obtainable via the Royal Oman Police portal."
+  },
+  {
+    "country": "Tajikistan",
+    "iso2": "TJ",
+    "airports": ["DYU"],
+    "visa_category": "visa_free",
+    "max_stay_days": 30,
+    "notes": "Visa-free entry for stays up to 30 days."
+  },
+  {
+    "country": "Uzbekistan",
+    "iso2": "UZ",
+    "airports": ["TAS", "SKD"],
+    "visa_category": "e_visa_easy",
+    "max_stay_days": 30,
+    "notes": "Simple electronic visa (e-Visa) issued within a few business days."
+  },
+  {
+    "country": "Brazil",
+    "iso2": "BR",
+    "airports": ["GRU", "GIG", "BSB"],
+    "visa_category": "visa_free",
+    "max_stay_days": 90,
+    "notes": "Visa-free entry up to 90 days for tourism."
+  },
+  {
+    "country": "Colombia",
+    "iso2": "CO",
+    "airports": ["BOG", "MDE", "CTG"],
+    "visa_category": "visa_free",
+    "max_stay_days": 90,
+    "notes": "Visa-free bilateral travel allowed for up to 90 days."
+  },
+  {
+    "country": "Ecuador",
+    "iso2": "EC",
+    "airports": ["UIO", "GYE"],
+    "visa_category": "visa_free",
+    "max_stay_days": 90,
+    "notes": "Visa-free access for tourism up to 90 days per calendar year."
+  },
+  {
+    "country": "Bolivia",
+    "iso2": "BO",
+    "airports": ["VVI", "LPB"],
+    "visa_category": "visa_on_arrival",
+    "max_stay_days": 30,
+    "notes": "Visa on arrival available at international airports for 30 days."
+  },
+  {
+    "country": "Suriname",
+    "iso2": "SR",
+    "airports": ["PBM"],
+    "visa_category": "e_visa_easy",
+    "max_stay_days": 90,
+    "notes": "Online tourist entry fee / e-Visa required before arrival."
+  },
+  {
+    "country": "Barbados",
+    "iso2": "BB",
+    "airports": ["BGI"],
+    "visa_category": "visa_free",
+    "max_stay_days": 90,
+    "notes": "Visa-free entry for up to 90 days."
+  },
+  {
+    "country": "Dominica",
+    "iso2": "DM",
+    "airports": ["DOM"],
+    "visa_category": "visa_free",
+    "max_stay_days": 21,
+    "notes": "Visa-free access for visitors up to 21 days."
+  },
+  {
+    "country": "Grenada",
+    "iso2": "GD",
+    "airports": ["GND"],
+    "visa_category": "visa_free",
+    "max_stay_days": 90,
+    "notes": "Visa-free stay for tourism up to 3 months."
+  },
+  {
+    "country": "Haiti",
+    "iso2": "HT",
+    "airports": ["PAP", "CAP"],
+    "visa_category": "visa_free",
+    "max_stay_days": 90,
+    "notes": "Visa-free entry up to 90 days with tourist tourist fee paid on arrival."
+  },
+  {
+    "country": "Saint Vincent and the Grenadines",
+    "iso2": "VC",
+    "airports": ["SVD"],
+    "visa_category": "visa_free",
+    "max_stay_days": 30,
+    "notes": "Visa-free entry for up to 1 month."
+  }
+]
