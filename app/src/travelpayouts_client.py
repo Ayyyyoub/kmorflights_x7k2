@@ -26,6 +26,7 @@ class FareResult:
     departure_date: str
     return_date: str | None
     stops: int
+    return_stops: int
     airline: str | None
     link: str | None
     raw: dict[str, Any]
@@ -76,6 +77,7 @@ class TravelpayoutsClient:
                     departure_date=item.get("departure_at", "")[:10],
                     return_date=(item.get("return_at") or "")[:10] or None,
                     stops=int(item.get("transfers", 0)),
+                    return_stops=int(item.get("return_transfers", 0)),
                     airline=item.get("airline"),
                     link=("https://www.aviasales.com" + item["link"]) if item.get("link") else None,
                     raw=item,

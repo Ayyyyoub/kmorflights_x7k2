@@ -95,7 +95,9 @@ def main() -> None:
                     candidates = [
                         f
                         for f in fares
-                        if f.stops <= cfg["max_stops"] and (f.stops == 0 or f.airline in safe_transit_airlines)
+                        if max(f.stops, f.return_stops) <= cfg["max_stops"]
+                        and (f.stops == 0 or f.airline in safe_transit_airlines)
+                        and (f.return_stops == 0 or f.airline in safe_transit_airlines)
                     ]
                     if not candidates:
                         time.sleep(0.3)
@@ -110,7 +112,7 @@ def main() -> None:
                     alert = should_alert(existing, cheapest.price, cfg["improvement_threshold_pct"])
 
                     if alert:
-                        stop_desc = "direct" if cheapest.stops == 0 else f"{cheapest.stops} stop(s)"
+                        out_desc = "direct" if cheapest.stops == 0 else f"{cheapest.stops} stop(s)"
                         mad_price = usd_to_mad(cheapest.price) if cfg["currency"] == "USD" else None
                         price_str = f"{cheapest.price:.0f} {cfg['currency']}"
                         if mad_price is not None:
@@ -118,11 +120,13 @@ def main() -> None:
                         trip_desc = "round-trip" if cheapest.return_date else "one-way"
                         title = f"{origin} -> {dest['country']} ({airport}): {price_str} {trip_desc}"
                         message = (
-                            f"{stop_desc} ({cheapest.airline or '?'}), depart {cheapest.departure_date}"
-                            + (f", return {cheapest.return_date}" if cheapest.return_date else "")
-                            + f"\nVisa: {dest['visa_category']} (max {dest.get('max_stay_days', '?')} days)"
+                            f"Out: {out_desc} ({cheapest.airline or '?'}), depart {cheapest.departure_date}"
                         )
-                        if cheapest.stops > 0:
+                        if cheapest.return_date:
+                            ret_desc = "direct" if cheapest.return_stops == 0 else f"{cheapest.return_stops} stop(s)"
+                            message += f"\nBack: {ret_desc}, return {cheapest.return_date}"
+                        message += f"\nVisa: {dest['visa_category']} (max {dest.get('max_stay_days', '?')} days)"
+                        if cheapest.stops > 0 or cheapest.return_stops > 0:
                             message += (
                                 "\n⚠️ Connecting flight: layover airport isn't confirmed by this API. "
                                 "Airline's hub is outside Schengen/UK, but double-check the actual routing on "
