@@ -66,6 +66,17 @@ price.
 
 ## Known quirks / things that bit us once
 
+- **The price API reports outbound and return stops separately**
+  (`transfers` vs `return_transfers`), but the code originally only read
+  `transfers` into a single `stops` field. A round-trip with a direct
+  outbound and a connecting (possibly Schengen) return would have been
+  silently treated as fully direct - the Schengen/UK transit safety check
+  never saw the return leg at all. Fixed: `FareResult` now carries both
+  `stops` and `return_stops`, and `app/src/main.py` requires **both** legs
+  to pass the stop-count and safe-airline checks. Confirmed with live data
+  that outbound/return stop counts frequently differ (9 of 20 fares on one
+  test route). If touching the filtering logic again, remember an
+  itinerary has two legs that can independently have layovers.
 - **GitHub Actions unset variable != unset env var.** `${{ vars.FOO }}`
   for an undefined repo variable renders as an empty string, which is set
   as the env var — this silently broke Python's `os.environ.get(key,
